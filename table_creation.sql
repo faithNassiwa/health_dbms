@@ -1,4 +1,7 @@
--- This file the commands for the creation of the hopsital database management system
+-- This file the commands for the creation of the hospital database management system
+
+create database if not exists hospital;
+use hospital; 
 
 create table address
 (id int auto_increment,
