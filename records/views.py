@@ -11,6 +11,17 @@ def index(request):
     return HttpResponse("Hello, world.")
 
 
+def get_medications():
+    cursor = connection.cursor()
+    cursor.callproc('get_all_medications')
+    medications_list = []
+    # for result in cursor.stored_results(): ## not working, not available probably in the package
+    for result in cursor.fetchall():
+        medications_list.append(result[0])
+    cursor.close()
+    return medications_list
+
+
 def upload_meds_data(request):
     base_site = 'https://www.drugs.com/top200'
     response = requests.get(base_site)
@@ -23,20 +34,20 @@ def upload_meds_data(request):
     unordered_list = soup.find('ul', class_="ddc-list-column-2")
     rows = unordered_list.find_all('li')
     top_200_medications = []
-
+    meds_list = get_medications()
     for row in rows:
         # get medication names
         name = row.text
         top_200_medications.append(name)
-
-    cursor = connection.cursor()
     count = 0
+    cursor = connection.cursor()
     for name in top_200_medications:
-        cursor.callproc('insert_medication', (name,))
-        count += 1
+        if name not in meds_list:
+            cursor.callproc('insert_medication', (name,))
+            count += 1
     cursor.close()
 
-    return HttpResponse("Added {} medications".format(count))
+    return HttpResponse("Added {} new medications".format(count))
 
 
 
