@@ -127,12 +127,14 @@ create table appointment
 (id int auto_increment,
 appointment_date date not null,
 appointment_time time not null,
+patient_id int not null,
 doctor_id int not null,
 visit_type int not null,
 status varchar(50) not null,
 notes text,
 primary key(id),
 foreign key(doctor_id) references doctor(id),
+foreign key(patient_id) references patient(id),
 foreign key(visit_type) references visit_type(id));
 
 create table ward
