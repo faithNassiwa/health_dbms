@@ -37,7 +37,8 @@ insert into visit_type(name) values ('Cardiology Appointment');
 insert into visit_type(name) values ('Emergency Room Visit');
 
 insert into visit(diagnosis, status, visit_type_id, visit_date, visit_time, notes, patient_id, doctor_id) values ('None', 'Complete', 1, '2010-11-14', '11:11', 'Patient is healthy', 1, 1);
-insert into visit(diagnosis, status, visit_type_id, visit_date, visit_time, notes, patient_id, doctor_id) values ('Broken Left Foot', 'Complete', 2, '2010-12-31', '13:01', 'Patient broke left foot when she fell off a tree', 1, 2);
+insert into visit(diagnosis, status, visit_type_id, visit_date, visit_time, notes, patient_id, doctor_id) values ('Broken Left Foot', 'Complete', 4, '2010-12-31', '13:01', 'Patient broke left foot when she fell off a tree', 1, 2);
+insert into visit(diagnosis, status, visit_type_id, visit_date, visit_time, notes, patient_id, doctor_id) values ('Kidney Stones', 'Complete', 4, '2010-12-31', '14:03', 'Patient is suffering moderate pain from kidney stones', 2, 2);
 
 insert into medication(name) values ('Dummy Medicine 1');
 insert into medication(name) values ('Dummy Medicine 2');
@@ -68,7 +69,7 @@ insert into ward(name, number_of_beds, department_id) values ('Pediatrics Ward',
 insert into ward(name, number_of_beds, department_id) values ('Oncology Ward', 30, 1);
 
 insert into admits(visit_id, ward_number, admit_date, admit_time, discharge_date, discharge_time) values (2, 1, '2010-12-31', '12:00', '2010-12-31', '18:00');
-
+insert into admits(visit_id, ward_number, admit_date, admit_time, discharge_date, discharge_time) values (3, 1, '2010-12-31', '14:03', null , null);
 
 
 
