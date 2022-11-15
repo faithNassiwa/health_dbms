@@ -7,6 +7,8 @@ create table address
 (id int auto_increment,
 street varchar(50) not null,
 city varchar(50) not null,
+state varchar(50) not null,
+postal_code varchar(50) not null,
 country varchar(50) not null,
 primary key(id));
 
