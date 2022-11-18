@@ -1,0 +1,19 @@
+{% extends 'records/base.html' %}
+{% block title %}Health DBMS {% endblock %}
+
+{% block content %}
+    <div class="box-body">
+        <div class="container-fluid">
+            <table class="table table-bordered">
+            <tr><th>Id</th><th>Visit Type</th><th>Visit Date</th><th>Visit Time</th><th>Patient's First Name</th><th>Patient's Last Name</th>
+            <th>Doctor's First Name</th><th>Doctor's Last Name</th><th>Diagnosis</th><th>Notes</th></tr>
+            {% for row in visits %}
+            <tr><td>{{ row.visit_id}}</td><td>{{ row.visit_type }}</td><td>{{ row.visit_date}}</td><td>{{ row.visit_time }}</td><td>{{ row.patient_first_name }}</td><td>{{ row.patient_last_name }}</td>
+            <td>{{ row.doctor_first_name}}</td><td>{{ row.doctor_last_name }}</td><td>{{ row.diagnosis }}</td><td>{{ row.notes }}</td></tr>
+            {% endfor %}
+            </table>
+
+        </div>
+    </div>
+{% endblock %}
+

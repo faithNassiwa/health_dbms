@@ -1,18 +1,9 @@
-from django.shortcuts import render
-from django.http import HttpResponse
-from django.db import connection
 import requests
 from bs4 import BeautifulSoup
 
-# Create your views here.
 
-
-def index(request):
-    return HttpResponse("Hello, world.")
-
-
-def get_medications():
-    cursor = connection.cursor()
+def get_medications(conn):
+    cursor = conn.cursor()
     cursor.callproc('get_all_medications')
     medications_list = []
     # for result in cursor.stored_results(): ## not working, not available probably in the package
@@ -22,7 +13,7 @@ def get_medications():
     return medications_list
 
 
-def upload_meds_data(request):
+def upload_meds_data(conn):
     base_site = 'https://www.drugs.com/top200'
     response = requests.get(base_site)
     if response.ok is False:
@@ -40,19 +31,10 @@ def upload_meds_data(request):
         name = row.text
         top_200_medications.append(name)
     count = 0
-    cursor = connection.cursor()
+    cursor = conn.cursor()
     for name in top_200_medications:
         if name not in meds_list:
             cursor.callproc('insert_medication', (name,))
             count += 1
     cursor.close()
-
-    return HttpResponse("Added {} new medications".format(count))
-
-
-
-
-
-
-
-
+    print("Added {} new medications".format(count))
