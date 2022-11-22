@@ -41,6 +41,9 @@ def menu_options(x):
         print('2. Monthly Prescriptions')
         print('3. Monthly Lab Tests')
         print('4. Hospital Schedule')
+        print('Appointments')
+        print('5. Schedule Upcoming Appointments')
+        print('5. Schedule Upcoming Appointments')
     elif x == 2:
         print('Doctor\'s menu')
         print('1. View Past Patient Visits')
@@ -49,6 +52,7 @@ def menu_options(x):
         print('Patient\'s menu')
         print('1. Schedule Appointment')
         print('2. View My Past Patient Visits')
+        print('3. View My Prescriptions')
     else:
         print('Wrong entry')
         menu_profile()
