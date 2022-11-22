@@ -4,12 +4,12 @@ DROP TRIGGER IF EXISTS update_appointment_status;
 
 delimiter $$ 
 
-CREATE TRIGGER update_appointment_status AFTER UPDATE ON visit
+CREATE TRIGGER update_appointment_status AFTER INSERT ON visit
 FOR EACH ROW
 BEGIN
 	UPDATE appointment AS a
     SET a.status = "completed"
-    WHERE a.appointment_date = NEW.visit_date AND a.appointment_time = NEW.visit_time
+    WHERE a.appointment_date = NEW.visit_date AND a.appointment_time >= NEW.visit_time
 		AND a.patient_id = NEW.patient_id AND a.doctor_id = NEW.doctor_id
         AND a.visit_type = NEW.visit_type_id;
     
