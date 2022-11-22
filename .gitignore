@@ -8,7 +8,7 @@
 *.pyc
 __pycache__/
 local_settings.py
-db.sqlite3
+django_archive/db.sqlite3
 media
 
 ### Linux ###
