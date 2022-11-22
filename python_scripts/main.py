@@ -11,7 +11,7 @@ print('Hospital DB setup')
 try:
     conn = connect(
         host='localhost',
-        port='8889',
+        port=input('Enter database port: '),
         user=input('Enter database username: '),
         password=getpass('Enter password: '),
         database='hospital'
@@ -44,7 +44,7 @@ def menu_options(x):
     elif x == 2:
         print('Doctor\'s menu')
         print('1. View Past Patient Visits')
-        print('2. etc')
+        print('2. Add Patient Visit')
     elif x == 3:
         print('Patient\'s menu')
         print('1. Schedule Appointment')
@@ -71,6 +71,8 @@ while user_role != 0:
             view_hospital_schedule(conn=conn)
         if user_role == 2 and menu_option == 1:
             view_patients_visit_summary(conn=conn)
+        if user_role == 3 and menu_option == 1:
+            create_appointment(conn=conn)
         menu_options(user_role)
         menu_option = input("Enter what you want to do from the menu above or 0 to go to main menu: ")
         menu_option = int(menu_option.strip())

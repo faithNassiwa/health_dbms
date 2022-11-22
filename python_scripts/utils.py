@@ -7,7 +7,7 @@ def get_medications(conn):
     cursor.callproc('get_all_medications')
     medications_list = []
     # for result in cursor.stored_results(): ## not working, not available probably in the package
-    for result in cursor.fetchall():
+    for result in cursor.fetchall(): ## need to change this
         medications_list.append(result[0])
     cursor.close()
     return medications_list
