@@ -9,7 +9,7 @@ BEGIN
     
     SELECT AVG(count) INTO average_num_perscriptions
     FROM (SELECT count(*) AS count
-		  FROM visits as v, perscribes as p
+		  FROM visit as v, prescribes as p
           WHERE MONTH(v.visit_date) = month_num AND YEAR(v.visit_date) = year_num
           AND v.id = p.visit_id
           GROUP BY v.doctor_id) AS perscriptions_per_doctor;
@@ -30,7 +30,7 @@ BEGIN
     
     SELECT AVG(count) INTO average_num_perscriptions
     FROM (SELECT count(*) AS count
-		  FROM visits as v, perscribes as p
+		  FROM visit as v, prescribes as p
           WHERE YEAR(v.visit_date) = year_num
           AND v.id = p.visit_id
           GROUP BY v.doctor_id) AS perscriptions_per_doctor;

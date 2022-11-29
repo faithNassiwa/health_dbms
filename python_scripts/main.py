@@ -38,12 +38,10 @@ def menu_options(x):
         print('Quick Stats')
         print('1. Number of Available Beds')
         print('Reports')
-        print('2. Monthly Prescriptions')
-        print('3. Monthly Lab Tests')
-        print('4. Hospital Schedule')
+        print('2.Monthly Stats')
         print('Appointments')
-        print('5. Schedule Upcoming Appointments')
-        print('5. Schedule Upcoming Appointments')
+        print('3. Schedule Upcoming Appointments')
+        print('4. Schedule Upcoming Appointments')
     elif x == 2:
         print('Doctor\'s menu')
         print('1. View Past Patient Visits')
@@ -71,6 +69,8 @@ while user_role != 0:
     while menu_option != 0:
         if user_role == 1 and menu_option == 1:
             get_available_beds(conn=conn)
+        if user_role == 1 and menu_option == 2:
+            get_monthly_stats(conn=conn)
         if user_role == 1 and menu_option == 4:
             view_hospital_schedule(conn=conn)
         if user_role == 2 and menu_option == 1:

@@ -9,7 +9,7 @@ BEGIN
     
     SELECT AVG(count) INTO average_num_tests
     FROM (SELECT count(*) AS count
-		  FROM visits as v, performs_lab_test as t
+		  FROM visit as v, performs_lab_test as t
           WHERE MONTH(v.visit_date) = month_num AND YEAR(v.visit_date) = year_num
           AND v.id = t.visit_id
           GROUP BY v.doctor_id) AS tests_per_doctor;
@@ -30,7 +30,7 @@ BEGIN
     
     SELECT AVG(count) INTO average_num_tests
     FROM (SELECT count(*) AS count
-		  FROM visits as v, performs_lab_test as t
+		  FROM visit as v, performs_lab_test as t
           WHERE YEAR(v.visit_date) = year_num
           AND v.id = t.visit_id
           GROUP BY v.doctor_id) AS tests_per_doctor;

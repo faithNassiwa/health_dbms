@@ -9,7 +9,7 @@ BEGIN
     
     SELECT AVG(count) INTO average_num_patients
     FROM (SELECT count(DISTINCT patient_id) AS count
-		  FROM visits
+		  FROM visit
           WHERE MONTH(visit_date) = month_num AND YEAR(visit_date) = year_num
           GROUP BY doctor_id) AS patients_per_doctor;
 
@@ -30,7 +30,7 @@ BEGIN
     
     SELECT AVG(count) INTO average_num_patients
     FROM (SELECT count(DISTINCT patient_id) AS count
-		  FROM visits
+		  FROM visit
           WHERE YEAR(visit_date) = year_num
           GROUP BY doctor_id) AS patients_per_doctor;
 
