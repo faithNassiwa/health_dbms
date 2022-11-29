@@ -11,15 +11,15 @@ create view patient_visit_summary as
 
 -- view of hospital schedule
 create view hospital_schedule as
-	select d.first_name, d.last_name, t.time_slot_date as date, t.start_time, t.end_time
+	select d.id, d.first_name, d.last_name, t.time_slot_date as date, t.start_time, t.end_time
     from doctor as d, time_slot as t, works_on
     where works_on.doctor_id = d.id
 		and works_on.time_slot_id = t.id;
 
 -- view of hospital patients
 create view hospital_patients as
-	select p.first_name, p.middle_name, p.last_name, p.date_of_birth, p.gender,
-			w.name as ward_name, d.first_name as doctor_first_name, d.last_name as doctor_last_name,
+	select p.id, p.first_name, p.middle_name, p.last_name, p.date_of_birth, p.gender,
+			w.name as ward_name, d.id as doctor_id, d.first_name as doctor_first_name, d.last_name as doctor_last_name,
             a.admit_date, a.admit_time
 	from patient as p, ward as w, admits as a, visit as v, doctor as d
     where a.visit_id = v.id
@@ -30,8 +30,8 @@ create view hospital_patients as
 
 -- view of discharged patients
 create view discharged_patients as
-	select p.first_name, p.middle_name, p.last_name, p.date_of_birth, p.gender,
-			w.name as ward_name, d.first_name as doctor_first_name, d.last_name as doctor_last_name,
+	select p.id, p.first_name, p.middle_name, p.last_name, p.date_of_birth, p.gender,
+			w.name as ward_name, d.id as doctor_id, d.first_name as doctor_first_name, d.last_name as doctor_last_name,
             a.admit_date, a.admit_time,
             a.discharge_date, a.discharge_time
 	from patient as p, ward as w, admits as a, visit as v, doctor as d
