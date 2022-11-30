@@ -75,6 +75,8 @@ while user_role != 0:
             view_hospital_schedule(conn=conn)
         if user_role == 2 and menu_option == 1:
             view_patients_visit_summary(conn=conn)
+        if user_role == 2 and menu_option == 2:
+            create_visit(conn=conn)
         if user_role == 3 and menu_option == 1:
             create_appointment(conn=conn)
         menu_options(user_role)
