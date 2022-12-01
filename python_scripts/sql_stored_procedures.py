@@ -1,3 +1,6 @@
+import pandas as pd
+
+
 def get_appointment_param(conn):
     doctor_id, appointment_date, appointment_time, visit_type, notes = 0, 0, 0, 0, 0
     patient_id = int(input("Enter your patient id: "))
@@ -87,8 +90,32 @@ def create_visit(conn):
         row = cursor.callproc('perform_lab_test', (added_visit_id, laboratory_test_id, perform_by_date, 0))
         conn.commit()
         print("Laboratory id {} added".format(row[1]))
+    print("\n")
 
-    ## admit patient
+    admit_patient = int(input("Do you want to admit this patient? Enter 1 for yes, 0 for no: "))
+    if admit_patient == 1:
+        get_wards = """ select ward_number, name from ward"""
+        cursor.execute(get_wards)
+        ward_id = []
+        ward_name = []
+        ward_number_of_available_beds = []
+        ward_dic = {'Ward ID': ward_id, 'Ward Name': ward_name, 'Available Beds': ward_number_of_available_beds}
+        for result in cursor.fetchall():
+            ward_id.append(result[0])
+            ward_name.append(result[1])
+            func = """
+                    SELECT get_available_beds(%s)
+                """
+            cursor.execute(func, (result[0],))
+            result = cursor.fetchone()
+            ward_number_of_available_beds.append(result[0])
+        df = pd.DataFrame(ward_dic)
+        print(df)
+        ward = int(input("Enter the ward id: "))
+        row = cursor.callproc('admit_patient_from_visit', (added_visit_id, ward, 0))
+        conn.commit()
+        print("{} admission added".format(row[2]))
+
     cursor.close()
     return None
 
