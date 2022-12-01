@@ -86,6 +86,6 @@ def create_visit(conn):
         row = cursor.callproc('perform_lab_test', (added_visit_id, laboratory_test_id, perform_by_date, 0))
         conn.commit()
         print("Laboratory id {} added".format(row[1]))
-
     cursor.close()
+    return None
 
