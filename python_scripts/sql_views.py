@@ -11,7 +11,6 @@ def view_patients_visit_summary(conn):
         result = cursor.fetchall()
         for row in result:
             print(row)
-        print('\n')
 
 
 def view_hospital_schedule(conn):
@@ -20,4 +19,3 @@ def view_hospital_schedule(conn):
     """
     df = pd.read_sql(hospital_schedule, conn)
     print(df)
-    print('\n')

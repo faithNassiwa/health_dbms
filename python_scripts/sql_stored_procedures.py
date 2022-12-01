@@ -23,7 +23,6 @@ def get_appointment_param(conn):
         cursor.close()
     else:
         print("No available timeslots")
-        print("\n")
     return [patient_id, doctor_id, appointment_date, appointment_time, visit_type, notes, 0]
 
 
@@ -35,7 +34,6 @@ def create_appointment(conn):
     result = row[6]
     cursor.close()
     print("{} appointment request made, someone will contact with further instructions.".format(result))
-    print("\n")
 
 
 def create_visit(conn):
@@ -44,15 +42,50 @@ def create_visit(conn):
     notes = input("Enter visit notes: ")
     diagnosis = input("Enter diagnosis: ")
     status = input("Enter visit status (Follow-up or Complete): ")
-    visit_type_id = int(input("Enter your visit type"))
+    visit_type_id = int(input("Enter your visit type: "))
     visit_date = input("Enter the date of the visit in format YYYY-MM-DD: ")  ## add default value in db that is to be overriden if user enters nothing?
     visit_time = input("Enter the time of the visit in format HH:MI:SS: ")
 
-    args = (diagnosis, status, visit_date, visit_time, visit_type_id, notes, patient_id, doctor_id, 0)
+    args = (diagnosis, status, visit_date, visit_time, visit_type_id, notes, patient_id, doctor_id, 0, 0)
     cursor = conn.cursor()
     row = cursor.callproc('create_visit', tuple(args))
     conn.commit()
     result = row[8]
-    cursor.close()
+    added_visit_id = row[9]
     print("{} visit added.".format(result))
     print("\n")
+
+    add_prescription = int(input("Do you want to add prescription? Enter 1 for yes, 0 for no: "))
+    if add_prescription == 1:
+        medication_name = input("Enter medication name: ")
+        get_meds_ids = """ 
+                    select * from medication where name like %s
+                    """
+        cursor.execute(get_meds_ids, ("%" + medication_name + "%",))
+        for result in cursor.fetchall():
+            print(result)
+        medication_id = int(input("Enter the medication id from the list above: "))
+        daily_dose = input("Enter the medication daily dose: ")
+        number_of_days = input("Enter the medication number of days: ")
+        row = cursor.callproc('add_prescription', (added_visit_id, medication_id, daily_dose, number_of_days, 0))
+        conn.commit()
+        print("Medication id {} added".format(row[1]))
+    print("\n")
+
+    add_lab_test = int(input("Do you want to add lab test? Enter 1 for yes, 0 for no: "))
+    if add_lab_test == 1:
+        lab_test_name = input("Enter lab test name: ")
+        get_lab_test_ids = """ 
+                            select * from laboratory_test where name like %s
+                            """
+        cursor.execute(get_lab_test_ids, ("%" + lab_test_name + "%",))
+        for result in cursor.fetchall():
+            print(result)
+        laboratory_test_id = int(input("Enter the laboratory test id from the list above: "))
+        perform_by_date = input("Enter the due date for the lab test in format YYYY-MM-DD: ")
+        row = cursor.callproc('perform_lab_test', (added_visit_id, laboratory_test_id, perform_by_date, 0))
+        conn.commit()
+        print("Laboratory id {} added".format(row[1]))
+
+    cursor.close()
+

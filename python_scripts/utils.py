@@ -6,9 +6,9 @@ def get_medications(conn):
     cursor = conn.cursor()
     cursor.callproc('get_all_medications')
     medications_list = []
-    # for result in cursor.stored_results(): ## not working, not available probably in the package
-    for result in cursor.fetchall(): ## need to change this
-        medications_list.append(result[0])
+    for result in cursor.stored_results():
+        for medication in result.fetchall():
+            medications_list.append(medication[0])
     cursor.close()
     return medications_list
 
@@ -25,7 +25,7 @@ def upload_meds_data(conn):
     unordered_list = soup.find('ul', class_="ddc-list-column-2")
     rows = unordered_list.find_all('li')
     top_200_medications = []
-    meds_list = get_medications()
+    meds_list = get_medications(conn)
     for row in rows:
         # get medication names
         name = row.text
@@ -38,3 +38,4 @@ def upload_meds_data(conn):
             count += 1
     cursor.close()
     print("Added {} new medications".format(count))
+    print('\n')

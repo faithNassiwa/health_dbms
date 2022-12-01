@@ -10,7 +10,6 @@ def get_available_beds(conn):
         cursor.execute(func, (ward_number,))
         result = cursor.fetchone()
         print(">>> {} beds available".format(result[0]))
-        print('\n')
     return None
 
 
@@ -42,6 +41,5 @@ def get_monthly_stats(conn):
 
     df = pd.DataFrame.from_dict(monthly_report, orient='index', columns=['Avg Per Doctor'])
     print(df)
-    print('\n')
     return None
 

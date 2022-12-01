@@ -3,6 +3,7 @@ from getpass import getpass
 from sql_views import *
 from sql_functions import *
 from sql_stored_procedures import *
+from utils import *
 
 # DB Setup
 print('Hospital Database Management System')
@@ -18,7 +19,6 @@ try:
     )
 except Error as e:
     print(e)
-
 
 # Commandline Application
 user_role = 0
@@ -41,15 +41,19 @@ def menu_options(x):
         print('2.Monthly Stats')
         print('Appointments')
         print('3. Schedule Upcoming Appointments')
-        print('4. Schedule Upcoming Appointments')
+        print('Schedule')
+        print('4. Hospital Schedule')
+        print('Medications')
+        print('5. Add top 200 Medications')
     elif x == 2:
         print('Doctor\'s menu')
-        print('1. View Past Patient Visits')
-        print('2. Add Patient Visit')
+        print('1. Add Patient Visit')
+        print('2. View Past Patient Visits')
+
     elif x == 3:
         print('Patient\'s menu')
         print('1. Schedule Appointment')
-        print('2. View My Past Patient Visits')
+        print('2. View My Past Visits')
         print('3. View My Prescriptions')
     else:
         print('Wrong entry')
@@ -73,18 +77,24 @@ while user_role != 0:
             get_monthly_stats(conn=conn)
         if user_role == 1 and menu_option == 4:
             view_hospital_schedule(conn=conn)
+        if user_role == 1 and menu_option == 5:
+            upload_meds_data(conn=conn)
         if user_role == 2 and menu_option == 1:
-            view_patients_visit_summary(conn=conn)
-        if user_role == 2 and menu_option == 2:
             create_visit(conn=conn)
+        if user_role == 2 and menu_option == 2:
+            view_patients_visit_summary(conn=conn)
         if user_role == 3 and menu_option == 1:
             create_appointment(conn=conn)
-        menu_options(user_role)
-        menu_option = input("Enter what you want to do from the menu above or 0 to go to main menu: ")
-        menu_option = int(menu_option.strip())
-    menu_profile()
-    user_role = input('Please enter your role: (1)-Admin, (2)Doctor, (3)-Patient or 0 to exit the program: ')
-    user_role = int(user_role.strip())
+        print('\n')
+        return_option = int(input('Do you want to return to your menu(1) or the main menu(0): '))
+        if return_option == 1:
+            menu_options(user_role)
+            menu_option = input("Enter what you want to do from the menu above or 0 to go to main menu: ")
+            menu_option = int(menu_option.strip())
+        else:
+            menu_profile()
+            user_role = input('Please enter your role: (1)-Admin, (2)Doctor, (3)-Patient or 0 to exit the program: ')
+            user_role = int(user_role.strip())
 
 print('End')
 conn.close()
