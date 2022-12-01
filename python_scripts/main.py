@@ -23,6 +23,7 @@ except Error as e:
 # Commandline Application
 user_role = 0
 menu_option = 0
+doctor_id = 0
 
 
 def menu_profile():
@@ -36,12 +37,12 @@ def menu_options(x):
     if x == 1:
         print('Admin\'s menu')
         print('Quick')
-        print('1. Add Patient') # create add patient
+        print('1. Add Patient')  # create add patient
         print('2. Number of Available Beds')  # all wards
         print('Reports')
         print('2.Monthly Stats')
         print('Appointments')
-        print('3. Schedule Upcoming Appointments')  ## Faith
+        print('3. Schedule Upcoming Appointments')  # Faith
         print('4. Cancel Appointment')  # delete
         print('5. Hospital Schedule')
         print('Medications')
@@ -61,8 +62,6 @@ def menu_options(x):
     else:
         print('Wrong entry')
         menu_profile()
-        user_role = input('Please enter your role: (1)-Admin, (2)Doctor, (3)-Patient : ')
-        user_role = int(user_role.strip())
 
 
 menu_profile()
@@ -86,6 +85,8 @@ while user_role != 0:
             create_visit(conn=conn)
         if user_role == 2 and menu_option == 2:
             view_patients_visit_summary(conn=conn)
+        if user_role == 2 and menu_option == 2:
+            create_visit(conn=conn)
         if user_role == 3 and menu_option == 1:
             create_appointment(conn=conn)
         print('\n')

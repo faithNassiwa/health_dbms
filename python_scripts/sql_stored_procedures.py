@@ -1,4 +1,5 @@
 def get_appointment_param(conn):
+    doctor_id, appointment_date, appointment_time, visit_type, notes = 0, 0, 0, 0, 0
     patient_id = int(input("Enter your patient id: "))
     cursor = conn.cursor()
     cursor.callproc('get_available_doctors')
@@ -17,7 +18,7 @@ def get_appointment_param(conn):
         print(doctors)
         doctor_id = int(input("Enter the doctor's Id you want to see: "))
         appointment_date = input("Enter the date of the appointment in format YYYY-MM-DD: ")
-        appointment_time = input("Enter the date of the appointment in format HH:MI: ")
+        appointment_time = input("Enter the time of the appointment in format HH:MI: ")
         visit_type = int(input("Enter your visit type"))
         notes = input("Enter any follow-up notes: ")
         cursor.close()
