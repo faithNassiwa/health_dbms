@@ -13,10 +13,13 @@ DELIMITER $$
 USE `hospital`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `create_visit`(
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 
     in diagnosis varchar(255),
     in status varchar(50),
 =======
+=======
+>>>>>>> Stashed changes
 <<<<<<< HEAD
 	in patient_id int,
     in doctor_id int,

@@ -59,6 +59,7 @@ def create_visit(conn):
     print("{} visit added.".format(result))
     print("\n")
 
+<<<<<<< Updated upstream
     add_prescription = int(input("Do you want to add prescription? Enter 1 for yes, 0 for no: "))
     if add_prescription == 1:
         medication_name = input("Enter medication name: ")
@@ -143,4 +144,25 @@ def add_lab_results(conn):
     return None
 
 
+=======
+
+def create_visit(conn):
+    doctor_id = int(input("Enter the doctor's Id: "))
+    patient_id = int(input("Enter the patient's Id: "))
+    notes = input("Enter visit notes: ")
+    diagnosis = input("Enter diagnosis: ")
+    status = input("Enter visit status (Follow-up or Complete): ")
+    visit_type_id = int(input("Enter your visit type"))
+    visit_date = input("Enter the date of the visit in format YYYY-MM-DD: ")  ## add default value in db that is to be overriden if user enters nothing?
+    visit_time = input("Enter the time of the visit in format HH:MI:SS: ")
+
+    args = (diagnosis, status, visit_date, visit_time, visit_type_id, notes, patient_id, doctor_id, 0)
+    cursor = conn.cursor()
+    row = cursor.callproc('create_visit', tuple(args))
+    conn.commit()
+    result = row[8]
+    cursor.close()
+    print("{} visit added.".format(result))
+    print("\n")
+>>>>>>> Stashed changes
 

@@ -36,6 +36,7 @@ def menu_profile():
 def menu_options(x):
     if x == 1:
         print('Admin\'s menu')
+<<<<<<< Updated upstream
         print(' **** Patient ****')
         print('1. Add Patient')  # create add patient
 
@@ -51,6 +52,14 @@ def menu_options(x):
         print('6. Schedule Upcoming Appointments')  # Faith
         print('7. Cancel Appointment')  # delete
 
+=======
+        print('Quick Stats')
+        print('1. Number of Available Beds')
+        print('Reports')
+        print('2.Monthly Stats')
+        print('Appointments')
+        print('3. Schedule Upcoming Appointments')
+>>>>>>> Stashed changes
     elif x == 2:
         print('Doctor\'s menu')
         print('1. Add Patient Visit')
@@ -89,8 +98,13 @@ while user_role != 0:
             create_visit(conn=conn)
         if user_role == 2 and menu_option == 2:
             view_patients_visit_summary(conn=conn)
+<<<<<<< Updated upstream
         if user_role == 2 and menu_option == 3:
             add_lab_results(conn=conn)
+=======
+        if user_role == 2 and menu_option == 2:
+            create_visit(conn=conn)
+>>>>>>> Stashed changes
         if user_role == 3 and menu_option == 1:
             create_appointment(conn=conn)
         print('\n')
