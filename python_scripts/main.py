@@ -55,7 +55,7 @@ def menu_options(x):
         print('Doctor\'s menu')
         print('1. Add Patient Visit')
         print('2. View Past Patient Visits')
-        print('3. Add Lab Result')  # update lab_test table
+        print('3. Add Lab Result')
         print('4. Discharge a Patient >> procedure pending Zack')
 
     elif x == 3:
