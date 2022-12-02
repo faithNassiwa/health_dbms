@@ -37,7 +37,7 @@ def menu_options(x):
     if x == 1:
         print('Admin\'s menu')
         print(' **** Patient ****')
-        print('1. Register Patient')  # create add patient
+        print('1. Register Patient')
 
         print(' **** Reports ****')
         print('2. Number of Available Beds')  # all wards
@@ -61,8 +61,8 @@ def menu_options(x):
     elif x == 3:
         print('Patient\'s menu')
         print('1. Schedule Appointment')
-        print('2. View My Past Visits')  # visits
-        print('3. View My Prescriptions')   # create_get_patient_prescription
+        print('2. View My Past Visits')
+        print('3. View My Prescriptions')
     else:
         print('Wrong entry')
         menu_profile()
@@ -99,6 +99,10 @@ while user_role != 0:
             discharge_patient(conn=conn)
         if user_role == 3 and menu_option == 1:
             create_appointment(conn=conn)
+        if user_role == 3 and menu_option == 2:
+            get_patient_visit(conn=conn)
+        if user_role == 3 and menu_option == 3:
+            get_patient_prescriptions(conn=conn)
         print('\n')
         menu_options(user_role)
         menu_option = input("Enter what you want to do from the menu above or 0 to go to main menu: ")

@@ -1,13 +1,7 @@
-<<<<<<< HEAD
--- Stored procedure for adding a patient visit in the 'visit' table
-=======
->>>>>>> 938807b (Add visit creation)
-USE `hospital`;
-DROP procedure IF EXISTS `create_visit`;
 
+-- Stored procedure for adding a patient visit in the 'visit' table
 USE `hospital`;
 DROP procedure IF EXISTS `hospital`.`create_visit`;
-;
 
 DELIMITER $$
 USE `hospital`$$

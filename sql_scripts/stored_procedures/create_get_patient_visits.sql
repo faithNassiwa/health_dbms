@@ -12,7 +12,7 @@ BEGIN
 		vt.name AS visit_type, v.diagnosis AS diagnosis, v.notes AS notes
 	FROM visit AS v, doctor AS d, visit_type AS vt
     WHERE v.patient_id = patient_id AND d.id = v.doctor_id
-		AND v.visit_type_id = vt.id;
+		AND v.visit_type_id = vt.id ORDER BY date DESC;
 END $$
 
 delimiter ;

@@ -1,4 +1,5 @@
 import pandas as pd
+pd.set_option('display.max_columns', None)
 
 
 def create_patient(conn):
@@ -139,6 +140,55 @@ def create_visit(conn):
         conn.commit()
         print("{} admission added".format(row[2]))
 
+    cursor.close()
+    return None
+
+
+def get_patient_visit(conn):
+    patient_id = int(input("Enter the patient's Id: "))
+    cursor = conn.cursor()
+    cursor.callproc('get_patient_visits', (patient_id,))
+    results = cursor.stored_results()
+    visit_date, visit_time, doctor_last_name, visit_type, diagnosis, notes = [], [], [], [], [], []
+    patient_visits = {'Visit Date': visit_date, 'Visit Time': visit_time, 'Doctor Last Name': doctor_last_name,
+                      'Visit Type':  visit_type, 'Diagnosis': diagnosis, 'Doctor Notes': notes }
+    if results:
+        for result in results:
+            for visit in result.fetchall():
+                visit_date.append(visit[0])
+                visit_time.append(visit[1])
+                doctor_last_name.append(visit[2])
+                visit_type.append(visit[3])
+                diagnosis.append(visit[4])
+                notes.append(visit[5])
+        df = pd.DataFrame(patient_visits)
+        print(df)
+    else:
+        print("No visits yet")
+    cursor.close()
+    return None
+
+
+def get_patient_prescriptions(conn):
+    patient_id = int(input("Enter the patient's Id: "))
+    cursor = conn.cursor()
+    cursor.callproc('get_patient_prescriptions', (patient_id,))
+    results = cursor.stored_results()
+    prescribed_date, medication, daily_dose, number_of_days = [], [], [], []
+    patient_prescriptions = {'Prescription Date':prescribed_date, 'Medication': medication, 'Daily Dose': daily_dose,
+                             'Number of Days': number_of_days}
+    if results:
+        for result in results:
+            for presc in result.fetchall():
+                prescribed_date.append(presc[0])
+                medication.append(presc[1])
+                daily_dose.append(presc[2])
+                number_of_days.append(presc[3])
+        df = pd.DataFrame(patient_prescriptions)
+        print(df)
+
+    else:
+        print("No prescriptions yet")
     cursor.close()
     return None
 
