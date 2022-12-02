@@ -40,7 +40,7 @@ def menu_options(x):
         print('1. Register Patient')
 
         print(' **** Reports ****')
-        print('2. Number of Available Beds')  # all wards
+        print('2.Number of Available Beds')  # all wards
         print('3.Monthly Stats')
         print('4.Hospital Schedule')
 
@@ -49,11 +49,11 @@ def menu_options(x):
 
         print(' **** Appointments ****')
         print('6. Schedule Upcoming Appointments')  # Faith
-        print('7. Cancel Appointment')  # delete
+        print('7. Cancel Appointment')
 
     elif x == 2:
         print('Doctor\'s menu')
-        print('1. Add Patient Visit')
+        print('1. Add Patient Visit / Prescription / Lab Test / Admission')
         print('2. View Past Patient Visits')
         print('3. Add Lab Result')
         print('4. Discharge a Patient')

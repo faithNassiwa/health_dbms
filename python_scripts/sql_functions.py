@@ -1,16 +1,31 @@
 import pandas as pd
+import matplotlib.pyplot as plt
 pd.set_option('display.max_columns', None)
 
 
 def get_available_beds(conn):
+    cursor = conn.cursor()
+    ward_ids, ward_names, beds_available = [], [], []
+    ward_beds_available = {'Ward Name': ward_names, 'Beds Available': beds_available}
     func = """
         SELECT get_available_beds(%s)
     """
-    ward_number = int(input("Enter the ward number: "))
-    with conn.cursor() as cursor:
-        cursor.execute(func, (ward_number,))
+    ward_query = """
+                SELECT ward_number, name FROM ward
+    """
+
+    cursor.execute(ward_query)
+    for result in cursor.fetchall():
+        ward_ids.append(result[0])
+        ward_names.append(result[1])
+
+    for ward_id in ward_ids:
+        cursor.execute(func, (ward_id,))
         result = cursor.fetchone()
-        print(">>> {} beds available".format(result[0]))
+        beds_available.append(result[0])
+
+    df = pd.DataFrame(ward_beds_available)
+    print(df)
     return None
 
 
