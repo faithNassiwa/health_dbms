@@ -11,7 +11,11 @@ CREATE PROCEDURE admit_patient_from_visit (
 )
 BEGIN
 	SET success = 0;
-    IF get_available_beds(ward_number) > 0 THEN
+    IF NOT EXISTS (SELECT *
+				   FROM admits a
+				   WHERE a.visit_id = visit_id
+				   AND a.admit_date IS NULL AND a.admit_time IS NULL)
+    AND get_available_beds(ward_number) > 0 THEN
 		INSERT INTO admits
 		VALUES (visit_id, ward_number, CURDATE(), CURTIME(), NULL, NULL);
         
