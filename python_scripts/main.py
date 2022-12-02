@@ -55,7 +55,7 @@ def menu_options(x):
         print('Doctor\'s menu')
         print('1. Add Patient Visit')
         print('2. View Past Patient Visits')
-        print('3. Add Lab Result >> add_lab_test_result')  # update table
+        print('3. Add Lab Result')  # update lab_test table
         print('4. Discharge a Patient >> procedure pending Zack')
 
     elif x == 3:
@@ -89,8 +89,8 @@ while user_role != 0:
             create_visit(conn=conn)
         if user_role == 2 and menu_option == 2:
             view_patients_visit_summary(conn=conn)
-        if user_role == 2 and menu_option == 2:
-            create_visit(conn=conn)
+        if user_role == 2 and menu_option == 3:
+            add_lab_results(conn=conn)
         if user_role == 3 and menu_option == 1:
             create_appointment(conn=conn)
         print('\n')

@@ -119,3 +119,28 @@ def create_visit(conn):
     cursor.close()
     return None
 
+
+def add_lab_results(conn):
+    visit_id = int(input("Enter the visit id: "))
+    laboratory_test_id = int(input("Enter the laboratory test id: "))
+    query = """
+            select * from performs_lab_test where visit_id = %s and laboratory_test_id = %s
+    """
+    cursor = conn.cursor()
+    cursor.execute(query, (visit_id, laboratory_test_id))
+    result = cursor.fetchall()
+    for row in result:
+        print(' '.join(str(x) for x in row))
+    confirm = int(input("Is this the correct laboratory test? Enter 1 for Yes, 0 for No: "))
+
+    if confirm == 1:
+        test_results = input("Enter the laboratory test results: ")
+        performed_on = input("Enter date the test was performed on in format YYYY-MM-DD: ")
+        row = cursor.callproc('add_lab_test_results', (visit_id, laboratory_test_id, test_results, performed_on, 0))
+        conn.commit()
+        print("{} lab result added".format(row[4]))
+    cursor.close()
+    return None
+
+
+
