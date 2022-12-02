@@ -26,6 +26,10 @@ def get_available_beds(conn):
 
     df = pd.DataFrame(ward_beds_available)
     print(df)
+    plt.figure(figsize=(12, 9))
+    plt.bar(df['Ward Name'], df['Beds Available'])
+    plt.title("Beds Available Per Ward", weight='bold')
+    plt.show()
     return None
 
 
@@ -59,3 +63,5 @@ def get_monthly_stats(conn):
     print(df)
     return None
 
+
+#%%

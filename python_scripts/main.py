@@ -37,32 +37,32 @@ def menu_options(x):
     if x == 1:
         print('Admin\'s menu')
         print(' **** Patient ****')
-        print('1. Register Patient')
+        print('1.Register Patient')
 
         print(' **** Reports ****')
-        print('2.Number of Available Beds')  # all wards
+        print('2.Number of Available Beds')
         print('3.Monthly Stats')
         print('4.Hospital Schedule')
 
         print(' **** Medications ****')
-        print('5. Add top 200 Medications')
+        print('5.Add top 200 Medications')
 
         print(' **** Appointments ****')
-        print('6. Schedule Upcoming Appointments')  # Faith
-        print('7. Cancel Appointment')
+        print('6.Schedule Upcoming Appointments')
+        print('7.Cancel Appointment')
 
     elif x == 2:
         print('Doctor\'s menu')
-        print('1. Add Patient Visit / Prescription / Lab Test / Admission')
-        print('2. View Past Patient Visits')
-        print('3. Add Lab Result')
-        print('4. Discharge a Patient')
+        print('1.Add Patient Visit / Prescription / Lab Test / Admission')
+        print('2.View Past Patient Visits')
+        print('3.Add Lab Result')
+        print('4.Discharge a Patient')
 
     elif x == 3:
         print('Patient\'s menu')
-        print('1. Schedule Appointment')
-        print('2. View My Past Visits')
-        print('3. View My Prescriptions')
+        print('1.Schedule Appointment')
+        print('2.View My Past Visits')
+        print('3.View My Prescriptions')
     else:
         print('Wrong entry')
         menu_profile()
