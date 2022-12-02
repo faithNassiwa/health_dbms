@@ -37,7 +37,7 @@ def menu_options(x):
     if x == 1:
         print('Admin\'s menu')
         print(' **** Patient ****')
-        print('1. Add Patient')  # create add patient
+        print('1. Register Patient')  # create add patient
 
         print(' **** Reports ****')
         print('2. Number of Available Beds')  # all wards
@@ -77,6 +77,8 @@ while user_role != 0:
     menu_option = input("Enter what you want to do from the menu above: ")
     menu_option = int(menu_option.strip())
     while menu_option != 0:
+        if user_role == 1 and menu_option == 1:
+            create_patient(conn=conn)
         if user_role == 1 and menu_option == 2:
             get_available_beds(conn=conn)
         if user_role == 1 and menu_option == 3:

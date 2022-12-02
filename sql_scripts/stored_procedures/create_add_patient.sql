@@ -16,7 +16,8 @@ CREATE PROCEDURE add_patient (
     IN state VARCHAR(50),
     IN postal_code VARCHAR(50),
     IN country VARCHAR(50),
-    OUT success INT
+    OUT success INT,
+    OUT patient_id INT
 )
 BEGIN
 	SET success = 0;
@@ -26,6 +27,7 @@ BEGIN
 	INSERT INTO patient(first_name, middle_name, last_name, phone_number, date_of_birth, gender, address_id)
     VALUES (first_name, middle_name, last_name, phone_number, date_of_birth, gender, LAST_INSERT_ID());
     SET success = 1;
+	SET patient_id = LAST_INSERT_ID();
     
 END $$
 

@@ -1,6 +1,28 @@
 import pandas as pd
 
 
+def create_patient(conn):
+    first_name = input("Enter patient's first name: ")
+    middle_name = input("Enter patient's middle name: ")
+    last_name = input("Enter patient's last name: ")
+    phone_number = int(input("Enter patient's phone number(digits only): "))
+    date_of_birth = input("Enter patient's date of birth in format YYYY-MM-DD: ")
+    gender = input("Enter patient's gender (Male/Female/Unknown): ")
+    street = input("Enter patient's street address: ")
+    city = input("Enter patient's city address: ")
+    state = input("Enter patient's state address: ")
+    postal_code = input("Enter patient's postal code address: ")
+    country = input("Enter patient's country address: ")
+    args = (first_name, middle_name, last_name, phone_number, date_of_birth, gender, street, city, state, postal_code,
+            country, 0, 0)
+    cursor = conn.cursor()
+    row = cursor.callproc('add_patient', args)
+    conn.commit()
+    cursor.close()
+    print("{} patient registered with patient id {}".format(row[11], row[12]))
+    return None
+
+
 def get_appointment_param(conn):
     doctor_id, appointment_date, appointment_time, visit_type, notes = 0, 0, 0, 0, 0
     patient_id = int(input("Enter your patient id: "))
