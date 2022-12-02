@@ -16,7 +16,7 @@ BEGIN
     FROM appointment a
     WHERE a.id = appointment_id;
     
-	IF LOWER(appointment_status) = 'upcoming' THEN
+	IF LOWER(appointment_status) in ('upcoming', 'New') THEN
 		DELETE FROM appointment
 		WHERE id = appointment_id;	
 		SET success = 1;

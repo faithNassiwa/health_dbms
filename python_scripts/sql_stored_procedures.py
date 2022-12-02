@@ -47,7 +47,8 @@ def create_visit(conn):
     diagnosis = input("Enter diagnosis: ")
     status = input("Enter visit status (Follow-up or Complete): ")
     visit_type_id = int(input("Enter your visit type: "))
-    visit_date = input("Enter the date of the visit in format YYYY-MM-DD: ")  ## add default value in db that is to be overriden if user enters nothing?
+    visit_date = input(
+        "Enter the date of the visit in format YYYY-MM-DD: ")  ## add default value in db that is to be overriden if user enters nothing?
     visit_time = input("Enter the time of the visit in format HH:MI:SS: ")
 
     args = (diagnosis, status, visit_date, visit_time, visit_type_id, notes, patient_id, doctor_id, 0, 0)
@@ -139,6 +140,64 @@ def add_lab_results(conn):
         row = cursor.callproc('add_lab_test_results', (visit_id, laboratory_test_id, test_results, performed_on, 0))
         conn.commit()
         print("{} lab result added".format(row[4]))
+    cursor.close()
+    return None
+
+
+def discharge_patient(conn):
+    patient_id = int(input("Enter the patient's Id: "))
+    cursor = conn.cursor()
+    row = cursor.callproc('discharge_patient', (patient_id, 0))
+    conn.commit()
+    print("Discharged {} patient ".format(row[1]))
+    cursor.close()
+    return None
+
+
+def get_appointment_details(conn):
+    cursor = conn.cursor()
+    get_appointment_patient = """
+            select a.id, p.first_name, p.last_name, p.date_of_birth, a.appointment_date, a.appointment_time, a.status 
+            from appointment a, patient p 
+            where a.patient_id = p.id and p.first_name like %s and p.last_name like %s and status = 'New'
+    """
+    patient_first_name = input("Enter patient's first name: ")
+    patient_last_name = input("Enter patient's last name: ")
+    cursor.execute(get_appointment_patient, ('%' + patient_first_name + '%', '%' + patient_last_name + '%'))
+    appointment_id = []
+    patient_f_name = []
+    patient_l_name = []
+    patient_dob = []
+    appointment_date = []
+    appointment_time = []
+    status = []
+    appointment_dic = {'Appointment ID': appointment_id, 'First Name': patient_f_name, 'Last Name': patient_l_name,
+                       'DOB': patient_dob, 'Appointment Date': appointment_date, 'Appointment Time': appointment_time,
+                       'Status': status}
+    for result in cursor.fetchall():
+        appointment_id.append(result[0])
+        patient_f_name.append(result[1])
+        patient_l_name.append(result[2])
+        patient_dob.append(result[3])
+        appointment_date.append(result[4])
+        appointment_time.append(result[5])
+        status.append(result[6])
+    df = pd.DataFrame(appointment_dic)
+    cursor.close()
+    return df
+
+
+def cancel_appointment(conn):
+    cursor = conn.cursor()
+    result = get_appointment_details(conn=conn)
+    if len(result) > 0:
+        print(result)
+        appointment_id = int(input("Enter the appointment id: "))
+        row = cursor.callproc('cancel_appointment', (appointment_id, 0))
+        conn.commit()
+        print("Deleted/cancelled {} appointment".format(row[1]))
+    else:
+        print("Can't find appointment under the patient's name.")
     cursor.close()
     return None
 
