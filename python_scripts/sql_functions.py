@@ -64,4 +64,3 @@ def get_monthly_stats(conn):
     return None
 
 
-#%%
