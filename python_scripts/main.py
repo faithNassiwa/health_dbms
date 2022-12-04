@@ -15,14 +15,8 @@ try:
         port=input('Enter database port: '),
         user=input('Enter database username: '),
         password=getpass('Enter password: '),
-        database='hospital'
-    )
-except Error as e:
-    print(e)
+        database='hospital')
 
-if Error:
-    print('Failed to connect to MySQL DB')
-else:
     # Commandline Application
     user_role = 0
     menu_option = 0
@@ -119,4 +113,9 @@ else:
         print('\n')
     print('End')
     conn.close()
+
+except Error as e:
+    print(e)
+
+
 
