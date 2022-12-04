@@ -229,9 +229,10 @@ def discharge_patient(conn):
 def get_appointment_details(conn):
     cursor = conn.cursor()
     get_appointment_patient = """
-            select a.id, p.first_name, p.last_name, p.date_of_birth, a.appointment_date, a.appointment_time, a.status 
-            from appointment a, patient p 
-            where a.patient_id = p.id and p.first_name like %s and p.last_name like %s and status = 'New'
+            select a.id, p.first_name, p.last_name, p.date_of_birth, a.appointment_date, a.appointment_time, a.status, 
+            p.phone_number from appointment a, patient p 
+            where a.patient_id = p.id and p.first_name like %s and p.last_name like %s and status = 'New' 
+            order by a.appointment_date desc
     """
     patient_first_name = input("Enter patient's first name: ")
     patient_last_name = input("Enter patient's last name: ")
@@ -243,9 +244,10 @@ def get_appointment_details(conn):
     appointment_date = []
     appointment_time = []
     status = []
+    phone_number = []
     appointment_dic = {'Appointment ID': appointment_id, 'First Name': patient_f_name, 'Last Name': patient_l_name,
                        'DOB': patient_dob, 'Appointment Date': appointment_date, 'Appointment Time': appointment_time,
-                       'Status': status}
+                       'Status': status, 'Phone Number': phone_number }
     for result in cursor.fetchall():
         appointment_id.append(result[0])
         patient_f_name.append(result[1])
@@ -254,6 +256,7 @@ def get_appointment_details(conn):
         appointment_date.append(result[4])
         appointment_time.append(result[5])
         status.append(result[6])
+        phone_number.append(result[7])
     df = pd.DataFrame(appointment_dic)
     cursor.close()
     return df
@@ -270,6 +273,21 @@ def cancel_appointment(conn):
         print("Deleted/cancelled {} appointment".format(row[1]))
     else:
         print("Can't find appointment under the patient's name.")
+    cursor.close()
+    return None
+
+
+def confirm_appointment(conn):
+    cursor = conn.cursor()
+    result = get_appointment_details(conn=conn)
+    if len(result) > 0:
+        print(result)
+        appointment_id = int(input("Enter the appointment id: "))
+        row = cursor.callproc('confirm_appointment', (appointment_id, 0))
+        conn.commit()
+        print("Confirmed {} appointment".format(row[1]))
+    else:
+        print("No new appointment requests")
     cursor.close()
     return None
 

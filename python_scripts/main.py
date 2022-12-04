@@ -48,7 +48,7 @@ def menu_options(x):
         print('5.Add top 200 Medications')
 
         print(' **** Appointments ****')
-        print('6.Schedule Upcoming Appointments')
+        print('6.Confirm Appointments')
         print('7.Cancel Appointment')
 
     elif x == 2:
@@ -87,6 +87,8 @@ while user_role != 0:
             view_hospital_schedule(conn=conn)
         if user_role == 1 and menu_option == 5:
             upload_meds_data(conn=conn)
+        if user_role == 1 and menu_option == 6:
+            confirm_appointment(conn=conn)
         if user_role == 1 and menu_option == 7:
             cancel_appointment(conn=conn)
         if user_role == 2 and menu_option == 1:
