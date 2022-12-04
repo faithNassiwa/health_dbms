@@ -45,7 +45,7 @@ def get_appointment_param(conn):
         doctor_id = int(input("Enter the doctor's Id you want to see: "))
         appointment_date = input("Enter the date of the appointment in format YYYY-MM-DD: ")
         appointment_time = input("Enter the time of the appointment in format HH:MI: ")
-        visit_type = int(input("Enter your visit type"))
+        visit_type = int(input("Enter your visit type code number: "))
         notes = input("Enter any follow-up notes: ")
         cursor.close()
     else:
@@ -86,7 +86,7 @@ def create_visit(conn):
     add_prescription = int(input("Do you want to add prescription? Enter 1 for yes, 0 for no: "))
     if add_prescription == 1:
         medication_name = input("Enter medication name: ")
-        get_meds_ids = """ 
+        get_meds_ids = """
                     select * from medication where name like %s
                     """
         cursor.execute(get_meds_ids, ("%" + medication_name + "%",))
@@ -103,7 +103,7 @@ def create_visit(conn):
     add_lab_test = int(input("Do you want to add lab test? Enter 1 for yes, 0 for no: "))
     if add_lab_test == 1:
         lab_test_name = input("Enter lab test name: ")
-        get_lab_test_ids = """ 
+        get_lab_test_ids = """
                             select * from laboratory_test where name like %s
                             """
         cursor.execute(get_lab_test_ids, ("%" + lab_test_name + "%",))
@@ -253,9 +253,9 @@ def discharge_patient(conn):
 def get_appointment_details(conn):
     cursor = conn.cursor()
     get_appointment_patient = """
-            select a.id, p.first_name, p.last_name, p.date_of_birth, a.appointment_date, a.appointment_time, a.status, 
-            p.phone_number from appointment a, patient p 
-            where a.patient_id = p.id and p.first_name like %s and p.last_name like %s and status = 'New' 
+            select a.id, p.first_name, p.last_name, p.date_of_birth, a.appointment_date, a.appointment_time, a.status,
+            p.phone_number from appointment a, patient p
+            where a.patient_id = p.id and p.first_name like %s and p.last_name like %s and status = 'New'
             order by a.appointment_date desc
     """
     patient_first_name = input("Enter patient's first name: ")
@@ -314,4 +314,3 @@ def confirm_appointment(conn):
         print("No new appointment requests")
     cursor.close()
     return None
-
