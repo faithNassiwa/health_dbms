@@ -60,6 +60,7 @@ try:
             print('1.Schedule Appointment')
             print('2.View My Past Visits')
             print('3.View My Prescriptions')
+            print('4.View My Lab Tests/Results')
         else:
             print('Wrong entry')
             menu_profile()
@@ -102,6 +103,8 @@ try:
                 get_patient_visit(conn=conn)
             if user_role == 3 and menu_option == 3:
                 get_patient_prescriptions(conn=conn)
+            if user_role == 3 and menu_option == 4:
+                get_patient_labs(conn=conn)
             print('\n')
             menu_options(user_role)
             menu_option = input("Enter what you want to do from the menu above or 0 to go to main menu: ")

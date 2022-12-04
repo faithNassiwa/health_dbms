@@ -193,6 +193,30 @@ def get_patient_prescriptions(conn):
     return None
 
 
+def get_patient_labs(conn):
+    patient_id = int(input("Enter the patient's Id: "))
+    cursor = conn.cursor()
+    cursor.callproc('get_patient_lab_results', (patient_id,))
+    results = cursor.stored_results()
+    lab_test, test_date, test_results, performed_on = [], [], [], []
+    patient_labs = {'Lab Test':lab_test, 'Test Taken On': test_date, 'Lab Results': test_results,
+                             'Result Date': performed_on}
+    if results:
+        for result in results:
+            for lab in result.fetchall():
+                lab_test.append(lab[0])
+                test_date.append(lab[1])
+                test_results.append(lab[2])
+                performed_on.append(lab[3])
+        df = pd.DataFrame(patient_labs)
+        print(df)
+
+    else:
+        print("No lab tests yet")
+    cursor.close()
+    return None
+
+
 def add_lab_results(conn):
     visit_id = int(input("Enter the visit id: "))
     laboratory_test_id = int(input("Enter the laboratory test id: "))
