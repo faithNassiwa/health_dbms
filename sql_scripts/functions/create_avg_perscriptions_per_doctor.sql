@@ -1,4 +1,4 @@
--- Function for getting the average number of perscriptions perscribed by each doctor in the given month
+-- Function for getting the average number of prescriptions prescribed by each doctor in the given month
 delimiter $$ 
 
 CREATE FUNCTION `avg_monthly_perscriptions_per_doctor` (month_num INT, year_num INT)

@@ -1,4 +1,3 @@
-
 -- Stored procedure for adding a patient visit in the 'visit' table
 USE `hospital`;
 DROP procedure IF EXISTS `hospital`.`create_visit`;

@@ -1,10 +1,6 @@
 USE `hospital`;
 DROP procedure IF EXISTS `get_available_doctors`;
 
-USE `hospital`;
-DROP procedure IF EXISTS `hospital`.`get_available_doctors`;
-;
-
 DELIMITER $$
 USE `hospital`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `get_available_doctors`()

@@ -1,10 +1,6 @@
 USE `hospital`;
 DROP procedure IF EXISTS `create_appointment`;
 
-USE `hospital`;
-DROP procedure IF EXISTS `hospital`.`create_appointment`;
-;
-
 DELIMITER $$
 USE `hospital`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `create_appointment`(

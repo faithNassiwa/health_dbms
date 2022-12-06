@@ -1,10 +1,6 @@
 USE `hospital`;
 DROP procedure IF EXISTS `perform_lab_test`;
 
-USE `hospital`;
-DROP procedure IF EXISTS `hospital`.`perform_lab_test`;
-;
-
 DELIMITER $$
 USE `hospital`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `perform_lab_test`(

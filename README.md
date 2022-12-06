@@ -23,8 +23,9 @@ upgrade the modules.
 * Run the database creation script sql-scripts/table_creation.sql
 * Insert testing data by running sql script sql-scripts/dummy_data.sql
 * Create the required views by running sql-scripts/views.sql
-* Create the required stored_procedures by running the files in sql-scripts/stored_procedures
-* Create the required functions by running the files in sql_scripts/functions
+* Create the required stored_procedures by running sql-scripts/stored_procedures_master.sql
+* Create the required functions by running sql_scripts/functions_master.sql
+* Create the required triggers by running sql_scripts/triggers_master.sql
 
 After successfully creating the database with its tables, sample data, views, stored_procedurs and functions, you can 
 now run the application. 

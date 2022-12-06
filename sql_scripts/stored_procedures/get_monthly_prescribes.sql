@@ -16,7 +16,7 @@ end $$
 
 delimiter ;
 
--- Stored procedure for geting table of count of prescribed meds in a specified month/year grouped by doctor
+-- Stored procedure for getting table of count of prescribed meds in a specified month/year grouped by doctor
 delimiter $$
 create procedure get_doctor_monthly_prescibes(
 	in month_num int,

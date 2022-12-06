@@ -198,10 +198,10 @@ insert into time_slot(time_slot_date, start_time, end_time) values ('2022-01-04'
 insert into time_slot(time_slot_date, start_time, end_time) values ('2022-01-04', '12:00', '23:59');
 insert into time_slot(time_slot_date, start_time, end_time) values ('2022-01-05', '00:00', '11:59');
 insert into time_slot(time_slot_date, start_time, end_time) values ('2022-01-05', '12:00', '23:59');
-insert into time_slot(time_slot_date, start_time, end_time) values ('2022-01-06', '00:00', '11:59');
-insert into time_slot(time_slot_date, start_time, end_time) values ('2022-01-06', '12:00', '23:59');
-insert into time_slot(time_slot_date, start_time, end_time) values ('2022-01-07', '00:00', '11:59');
-insert into time_slot(time_slot_date, start_time, end_time) values ('2022-01-07', '12:00', '23:59');
+insert into time_slot(time_slot_date, start_time, end_time) values ('2022-11-06', '00:00', '11:59');
+insert into time_slot(time_slot_date, start_time, end_time) values ('2023-01-06', '12:00', '23:59');
+insert into time_slot(time_slot_date, start_time, end_time) values ('2022-12-30', '00:00', '11:59');
+insert into time_slot(time_slot_date, start_time, end_time) values ('2023-01-07', '12:00', '23:59');
 
 
 insert into works_on(doctor_id, time_slot_id) values (1, 1);
