@@ -26,31 +26,32 @@ def create_patient(conn):
 
 def get_appointment_param(conn):
     doctor_id, appointment_date, appointment_time, visit_type, notes = 0, 0, 0, 0, 0
+    doctor_no, doctor_first_name, doctor_last_name, doctor_area_of_expertise = [], [], [], []
+    doctors = {'Doctor ID':doctor_no, 'First Name': doctor_first_name, 'Last Name': doctor_last_name, 'Area of Expertise': doctor_area_of_expertise }
     patient_id = int(input("Enter your patient id: "))
     cursor = conn.cursor()
     cursor.callproc('get_available_doctors')
-    doctors = []
     results = cursor.stored_results()
-
+    df = pd.DataFrame(doctors)
     if results:
         for result in results:
             for doctor in result.fetchall():
-                doctor_no = doctor[0]
-                doctor_first_name = doctor[1]
-                doctor_last_name = doctor[2]
-                doctor_area_of_expertise = doctor[3]
+                doctor_no.append(doctor[0])
+                doctor_first_name.append(doctor[1])
+                doctor_last_name.append(doctor[2])
+                doctor_area_of_expertise.append(doctor[3])
                 doctors.append(str(doctor_no) + "." + doctor_first_name + " " + doctor_last_name + " "
                                + doctor_area_of_expertise)
-        print(doctors)
+        print(df)
         doctor_id = int(input("Enter the doctor's Id you want to see: "))
         appointment_date = input("Enter the date of the appointment in format YYYY-MM-DD: ")
         appointment_time = input("Enter the time of the appointment in format HH:MI: ")
         visit_type = int(input("Enter your visit type code number: "))
         notes = input("Enter any follow-up notes: ")
         cursor.close()
+        return [patient_id, doctor_id, appointment_date, appointment_time, visit_type, notes, 0]
     else:
         print("No available timeslots")
-    return [patient_id, doctor_id, appointment_date, appointment_time, visit_type, notes, 0]
 
 
 def create_appointment(conn):

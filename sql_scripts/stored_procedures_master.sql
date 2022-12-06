@@ -372,3 +372,16 @@ BEGIN
 END$$
 
 DELIMITER ;
+
+-- Stored procedure to get all medications from medication table
+USE `hospital`;
+DROP procedure IF EXISTS `get_all_medications`;
+
+DELIMITER $$
+USE `hospital`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `get_all_medications`()
+BEGIN
+	select name from medication;
+END$$
+
+DELIMITER ;
