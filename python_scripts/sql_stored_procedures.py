@@ -1,4 +1,7 @@
 import pandas as pd
+import warnings
+
+warnings.simplefilter("ignore")
 pd.set_option('display.max_columns', None)
 
 
@@ -25,14 +28,15 @@ def create_patient(conn):
 
 
 def get_appointment_param(conn):
-    doctor_id, appointment_date, appointment_time, visit_type, notes = 0, 0, 0, 0, 0
     doctor_no, doctor_first_name, doctor_last_name, doctor_area_of_expertise = [], [], [], []
-    doctors = {'Doctor ID':doctor_no, 'First Name': doctor_first_name, 'Last Name': doctor_last_name, 'Area of Expertise': doctor_area_of_expertise }
+    date_available, start_time, end_time = [], [], []
+    doctors = {'Doctor ID':doctor_no, 'First Name': doctor_first_name, 'Last Name': doctor_last_name,
+               'Area of Expertise': doctor_area_of_expertise, 'Date Available': date_available, 'From': start_time,
+               'End': end_time}
     patient_id = int(input("Enter your patient id: "))
     cursor = conn.cursor()
     cursor.callproc('get_available_doctors')
     results = cursor.stored_results()
-    df = pd.DataFrame(doctors)
     if results:
         for result in results:
             for doctor in result.fetchall():
@@ -40,13 +44,20 @@ def get_appointment_param(conn):
                 doctor_first_name.append(doctor[1])
                 doctor_last_name.append(doctor[2])
                 doctor_area_of_expertise.append(doctor[3])
-                doctors.append(str(doctor_no) + "." + doctor_first_name + " " + doctor_last_name + " "
-                               + doctor_area_of_expertise)
+                date_available.append(doctor[4])
+                start_time.append(doctor[5])
+                end_time.append(doctor[6])
+        df = pd.DataFrame(doctors)
         print(df)
         doctor_id = int(input("Enter the doctor's Id you want to see: "))
         appointment_date = input("Enter the date of the appointment in format YYYY-MM-DD: ")
         appointment_time = input("Enter the time of the appointment in format HH:MI: ")
-        visit_type = int(input("Enter your visit type code number: "))
+        visit_type = """
+                SELECT * FROM hospital.visit_type;
+            """
+        df = pd.read_sql(visit_type, conn)
+        print(df)
+        visit_type = int(input("Enter your visit type code number from list above: "))
         notes = input("Enter any follow-up notes: ")
         cursor.close()
         return [patient_id, doctor_id, appointment_date, appointment_time, visit_type, notes, 0]

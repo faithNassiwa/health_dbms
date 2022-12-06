@@ -1,4 +1,8 @@
 import pandas as pd
+import warnings
+
+warnings.simplefilter("ignore")
+pd.set_option('display.max_columns', None)
 # SQL Views
 
 
