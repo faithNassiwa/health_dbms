@@ -52,13 +52,22 @@ def get_monthly_stats(conn):
     with conn.cursor() as cursor:
         cursor.execute(avg_monthly_patients_seen, (month, year))
         patients_seen = cursor.fetchone()
-        monthly_report['Patients Seen'] = float(patients_seen[0])
+        if patients_seen[0]:
+            monthly_report['Patients Seen'] = int(patients_seen[0])
+        else:
+            monthly_report['Patients Seen'] = 0
         cursor.execute(avg_monthly_medications_prescribed, (month, year))
         meds_prescribed = cursor.fetchone()
-        monthly_report['Meds Prescribed'] = float(meds_prescribed[0])
+        if meds_prescribed[0]:
+            monthly_report['Meds Prescribed'] = meds_prescribed[0]
+        else:
+            monthly_report['Meds Prescribed'] = 0
         cursor.execute(avg_monthly_lab_test, (month, year))
         lab_tests_performed = cursor.fetchone()
-        monthly_report['Lab Tests Performed'] = float(lab_tests_performed[0])
+        if lab_tests_performed[0]:
+            monthly_report['Lab Tests Performed'] = lab_tests_performed[0]
+        else:
+            monthly_report['Lab Tests Performed'] = 0
 
     df = pd.DataFrame.from_dict(monthly_report, orient='index', columns=['Avg Per Doctor'])
     print(df)

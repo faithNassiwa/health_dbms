@@ -23,7 +23,7 @@ def create_patient(conn):
     row = cursor.callproc('add_patient', args)
     conn.commit()
     cursor.close()
-    print("{} patient registered with patient id {}".format(row[11], row[12]))
+    print(">> {} patient registered with patient id {}".format(row[11], row[12]))
     return None
 
 
@@ -62,7 +62,7 @@ def get_appointment_param(conn):
         cursor.close()
         return [patient_id, doctor_id, appointment_date, appointment_time, visit_type, notes, 0]
     else:
-        print("No available timeslots")
+        print(">> No available timeslots")
 
 
 def create_appointment(conn):
@@ -72,7 +72,7 @@ def create_appointment(conn):
     conn.commit()
     result = row[6]
     cursor.close()
-    print("{} appointment request made, someone will contact with further instructions.".format(result))
+    print(">> {} appointment request made, someone will contact with further instructions.".format(result))
 
 
 def create_visit(conn):
@@ -109,7 +109,7 @@ def create_visit(conn):
         number_of_days = input("Enter the medication number of days: ")
         row = cursor.callproc('add_prescription', (added_visit_id, medication_id, daily_dose, number_of_days, 0))
         conn.commit()
-        print("Medication id {} added".format(row[1]))
+        print(">> Medication id {} added".format(row[1]))
     print("\n")
 
     add_lab_test = int(input("Do you want to add lab test? Enter 1 for yes, 0 for no: "))
@@ -125,7 +125,7 @@ def create_visit(conn):
         perform_by_date = input("Enter the due date for the lab test in format YYYY-MM-DD: ")
         row = cursor.callproc('perform_lab_test', (added_visit_id, laboratory_test_id, perform_by_date, 0))
         conn.commit()
-        print("Laboratory id {} added".format(row[1]))
+        print(">> Laboratory id {} added".format(row[1]))
     print("\n")
 
     admit_patient = int(input("Do you want to admit this patient? Enter 1 for yes, 0 for no: "))
@@ -150,7 +150,7 @@ def create_visit(conn):
         ward = int(input("Enter the ward id: "))
         row = cursor.callproc('admit_patient_from_visit', (added_visit_id, ward, 0))
         conn.commit()
-        print("{} admission added".format(row[2]))
+        print(">> {} admission added".format(row[2]))
 
     cursor.close()
     return None
@@ -200,7 +200,7 @@ def get_patient_prescriptions(conn):
         print(df)
 
     else:
-        print("No prescriptions yet")
+        print(">> No prescriptions yet")
     cursor.close()
     return None
 
@@ -244,16 +244,16 @@ def add_lab_results(conn):
             print(' '.join(str(x) for x in row))
         confirm = int(input("Is this the correct laboratory test? Enter 1 for Yes, 0 for No: "))
     else:
-        print('Can not find a lab test for this visit. Please enter a visit with a lab test. ')
+        print('>> Can not find a lab test for this visit. Please enter a visit with a lab test. ')
 
     if confirm == 1:
         test_results = input("Enter the laboratory test results: ")
         performed_on = input("Enter date the test was performed on in format YYYY-MM-DD: ")
         row = cursor.callproc('add_lab_test_results', (visit_id, laboratory_test_id, test_results, performed_on, 0))
         conn.commit()
-        print("{} lab result added".format(row[4]))
+        print(">> {} lab result added".format(row[4]))
     else:
-        print('There is no lab test with id {} on the visit id {}'.format(laboratory_test_id, visit_id))
+        print('>> There is no lab test with id {} on the visit id {}'.format(laboratory_test_id, visit_id))
     cursor.close()
     return None
 
@@ -263,9 +263,9 @@ def discharge_patient(conn):
     cursor = conn.cursor()
     row = cursor.callproc('discharge_patient', (patient_id, 0))
     conn.commit()
-    print("Discharged {} patient ".format(row[1]))
+    print(">> Discharged {} patient ".format(row[1]))
     if row[1] == 0:
-        print(f'Patient with patient {patient_id} has no admission record, please enter a patient id who is admitted.')
+        print(f'>> Patient with patient {patient_id} has no admission record, please enter a patient id who is admitted.')
     cursor.close()
     return None
 
@@ -314,9 +314,9 @@ def cancel_appointment(conn):
         appointment_id = int(input("Enter the appointment id: "))
         row = cursor.callproc('cancel_appointment', (appointment_id, 0))
         conn.commit()
-        print("Deleted/cancelled {} appointment".format(row[1]))
+        print(">> Deleted/cancelled {} appointment".format(row[1]))
     else:
-        print("Can't find appointment under the patient's name.")
+        print(">> Can't find appointment under the patient's name.")
     cursor.close()
     return None
 
@@ -329,8 +329,8 @@ def confirm_appointment(conn):
         appointment_id = int(input("Enter the appointment id: "))
         row = cursor.callproc('confirm_appointment', (appointment_id, 0))
         conn.commit()
-        print("Confirmed {} appointment".format(row[1]))
+        print(">> Confirmed {} appointment".format(row[1]))
     else:
-        print("No new appointment requests")
+        print(">> No new appointment requests for this patient")
     cursor.close()
     return None
