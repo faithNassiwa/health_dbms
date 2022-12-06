@@ -264,6 +264,8 @@ def discharge_patient(conn):
     row = cursor.callproc('discharge_patient', (patient_id, 0))
     conn.commit()
     print("Discharged {} patient ".format(row[1]))
+    if row[1] == 0:
+        print(f'Patient with patient {patient_id} has no admission record, please enter a patient id who is admitted.')
     cursor.close()
     return None
 
