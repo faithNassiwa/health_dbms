@@ -230,6 +230,7 @@ def get_patient_labs(conn):
 
 
 def add_lab_results(conn):
+    confirm = 0
     visit_id = int(input("Enter the visit id: "))
     laboratory_test_id = int(input("Enter the laboratory test id: "))
     query = """
@@ -238,9 +239,12 @@ def add_lab_results(conn):
     cursor = conn.cursor()
     cursor.execute(query, (visit_id, laboratory_test_id))
     result = cursor.fetchall()
-    for row in result:
-        print(' '.join(str(x) for x in row))
-    confirm = int(input("Is this the correct laboratory test? Enter 1 for Yes, 0 for No: "))
+    if result:
+        for row in result:
+            print(' '.join(str(x) for x in row))
+        confirm = int(input("Is this the correct laboratory test? Enter 1 for Yes, 0 for No: "))
+    else:
+        print('Can not find a lab test for this visit. Please enter a visit with a lab test. ')
 
     if confirm == 1:
         test_results = input("Enter the laboratory test results: ")
@@ -248,6 +252,8 @@ def add_lab_results(conn):
         row = cursor.callproc('add_lab_test_results', (visit_id, laboratory_test_id, test_results, performed_on, 0))
         conn.commit()
         print("{} lab result added".format(row[4]))
+    else:
+        print('There is no lab test with id {} on the visit id {}'.format(laboratory_test_id, visit_id))
     cursor.close()
     return None
 
