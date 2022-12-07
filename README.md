@@ -1,6 +1,6 @@
-# Hospital DBMS
+# Hospital Data Management System
 ## Description
-A commandline based hospital database management system for managing hospital records on patients, doctors, visits,
+A commandline based hospital data management system for managing hospital records on patients, doctors, visits,
 appointment, medications, lab tests and hospital schedule. 
 
 ## Features
@@ -27,8 +27,8 @@ upgrade the modules.
 * Create the required functions by running sql_scripts/functions_master.sql
 * Create the required triggers by running sql_scripts/triggers_master.sql
 
-After successfully creating the database with its tables, sample data, views, stored_procedurs and functions, you can 
-now run the application. 
+After successfully creating the database with its tables, sample data, views, stored_procedures, functions and triggers
+you can now run the application. 
 
 ### Run Hospital DBMS
 * From the commandline, run `python3 python_scripts/main.py`
