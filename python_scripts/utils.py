@@ -3,6 +3,11 @@ from bs4 import BeautifulSoup
 
 
 def get_medications(conn):
+    """
+    Gets all medications names from the database using the get_all_medications stored procedure.
+    param conn: MySQLConnection object
+    return: A list of all medication names from the database
+    """
     cursor = conn.cursor()
     cursor.callproc('get_all_medications')
     medications_list = []
@@ -14,6 +19,11 @@ def get_medications(conn):
 
 
 def upload_meds_data(conn):
+    """
+    Inserts the top 200 medications from the base_site into the Medication table if the name does not already exist.
+    param conn: MySQLConnection object
+    return: None
+    """
     base_site = 'https://www.drugs.com/top200'
     response = requests.get(base_site)
     if response.ok is False:
@@ -39,3 +49,4 @@ def upload_meds_data(conn):
     cursor.close()
     print("Added {} new medications".format(count))
     print('\n')
+    return None

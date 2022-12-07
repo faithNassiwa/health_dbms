@@ -79,10 +79,6 @@ try:
                 create_patient(conn=conn)
             if user_role == 1 and menu_option == 2:
                 get_available_beds(conn=conn)
-                menu_options(user_role)
-                menu_option = input("Enter what you want to do from the menu above or 0 to go to main menu: ")
-                menu_option = int(menu_option.strip())
-                print('\n')
             if user_role == 1 and menu_option == 3:
                 get_monthly_stats(conn=conn)
             if user_role == 1 and menu_option == 4:
