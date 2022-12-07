@@ -6,6 +6,11 @@ pd.set_option('display.max_columns', None)
 
 
 def create_patient(conn):
+    """
+    Captures and inserts patient details entered by the user into the database.
+    param conn: MySQLConnection object
+    return: None
+    """
     first_name = input("Enter patient's first name: ")
     middle_name = input("Enter patient's middle name: ")
     last_name = input("Enter patient's last name: ")
@@ -28,6 +33,12 @@ def create_patient(conn):
 
 
 def get_appointment_param(conn):
+    """
+    Gets appointment parameters based on inputs from a user. Provides the user available doctors from tomorrow's date
+    and visit types from the database that the user can base on to make inputs.
+    param conn: MySQLConnection object
+    return: List of appointment details or None
+    """
     doctor_no, doctor_first_name, doctor_last_name, doctor_area_of_expertise = [], [], [], []
     date_available, start_time, end_time = [], [], []
     doctors = {'Doctor ID':doctor_no, 'First Name': doctor_first_name, 'Last Name': doctor_last_name,
@@ -66,6 +77,11 @@ def get_appointment_param(conn):
 
 
 def create_appointment(conn):
+    """
+    Inserts an appointment record in the database based on user input.
+    param conn: MySQLConnection object
+    return: None
+    """
     args = get_appointment_param(conn=conn)
     cursor = conn.cursor()
     row = cursor.callproc('create_appointment', tuple(args))
@@ -73,9 +89,15 @@ def create_appointment(conn):
     result = row[6]
     cursor.close()
     print(">> {} appointment request made, someone will contact with further instructions.".format(result))
+    return None
 
 
 def create_visit(conn):
+    """
+    Captures and inserts visit, prescription, lab test and admits user input into the database
+    param conn: MySQLConnection object
+    return: None
+    """
     doctor_id = int(input("Enter the doctor's Id: "))
     patient_id = int(input("Enter the patient's Id: "))
     notes = input("Enter visit notes: ")
@@ -157,6 +179,11 @@ def create_visit(conn):
 
 
 def get_patient_visit(conn):
+    """
+    Gets and saves all patient's visits in a data frame that is printed as output.
+    param conn: MySQLConnection object
+    return: None
+    """
     patient_id = int(input("Enter the patient's Id: "))
     cursor = conn.cursor()
     cursor.callproc('get_patient_visits', (patient_id,))
@@ -182,6 +209,11 @@ def get_patient_visit(conn):
 
 
 def get_patient_prescriptions(conn):
+    """
+    Gets and saves all patient's prescriptions in a data frame that is printed as output.
+    param conn: MySQLConnection object
+    return: None
+    """
     patient_id = int(input("Enter the patient's Id: "))
     cursor = conn.cursor()
     cursor.callproc('get_patient_prescriptions', (patient_id,))
@@ -206,6 +238,11 @@ def get_patient_prescriptions(conn):
 
 
 def get_patient_labs(conn):
+    """
+        Gets and saves all patient's performed laboratory tests in a data frame that is printed as output.
+        param conn: MySQLConnection object
+        return: None
+    """
     patient_id = int(input("Enter the patient's Id: "))
     cursor = conn.cursor()
     cursor.callproc('get_patient_lab_results', (patient_id,))
@@ -230,6 +267,11 @@ def get_patient_labs(conn):
 
 
 def add_lab_results(conn):
+    """
+    Updates results to the laboratory test performed in the database.
+    param conn: MySQLConnection object
+    return: None
+    """
     confirm = 0
     visit_id = int(input("Enter the visit id: "))
     laboratory_test_id = int(input("Enter the laboratory test id: "))
@@ -259,6 +301,11 @@ def add_lab_results(conn):
 
 
 def discharge_patient(conn):
+    """
+    Updated the discharge date and time in the admits table in the database.
+    param conn: MySQLConnection object
+    return: None
+    """
     patient_id = int(input("Enter the patient's Id: "))
     cursor = conn.cursor()
     row = cursor.callproc('discharge_patient', (patient_id, 0))
@@ -271,6 +318,11 @@ def discharge_patient(conn):
 
 
 def get_appointment_details(conn):
+    """
+    Get appointments details for a specific patient from the database and returns it a dataframe.
+    param conn: MySQLConnection object
+    return: A dataframe containing appointments details.
+    """
     cursor = conn.cursor()
     get_appointment_patient = """
             select a.id, p.first_name, p.last_name, p.date_of_birth, a.appointment_date, a.appointment_time, a.status,
@@ -307,6 +359,11 @@ def get_appointment_details(conn):
 
 
 def cancel_appointment(conn):
+    """
+    Deletes an appointment using the stored procedure in the database and prints a message if deleted successfully.
+    param conn: MySQLConnection object
+    return: None
+    """
     cursor = conn.cursor()
     result = get_appointment_details(conn=conn)
     if len(result) > 0:
@@ -322,6 +379,12 @@ def cancel_appointment(conn):
 
 
 def confirm_appointment(conn):
+    """
+    Updates the appointment status to upcoming using the stored procedure in the database and prints a message if update
+    is made successfully and if otherwise.
+    param conn: MySQLConnection object
+    return: None
+    """
     cursor = conn.cursor()
     result = get_appointment_details(conn=conn)
     if len(result) > 0:

@@ -7,6 +7,11 @@ pd.set_option('display.max_columns', None)
 
 
 def view_patients_visit_summary(conn):
+    """
+    Gets patients visit summary data from the database view and adds it in a dataframe that's printed in the commandline.
+    param conn: MySQLConnection object
+    return: None
+    """
     patients_visits_query = """
         SELECT * FROM hospital.patient_visit_summary;
     """
@@ -16,6 +21,11 @@ def view_patients_visit_summary(conn):
 
 
 def view_hospital_schedule(conn):
+    """
+    Gets hospital schedule data from the database view and adds it in a dataframe that's printed in the commandline.
+    param conn: MySQLConnection object
+    return: None
+    """
     hospital_schedule = """
         SELECT * FROM hospital.hospital_schedule;
     """

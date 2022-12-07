@@ -4,6 +4,12 @@ pd.set_option('display.max_columns', None)
 
 
 def get_available_beds(conn):
+    """
+    Gets the number of available beds by ward and plots a bar chart visual report and dataframe printed in the
+    commandline.
+    param conn: MySQLConnection object
+    return: None
+    """
     cursor = conn.cursor()
     ward_ids, ward_names, beds_available = [], [], []
     ward_beds_available = {'Ward Name': ward_names, 'Beds Available': beds_available}
@@ -35,6 +41,11 @@ def get_available_beds(conn):
 
 
 def get_monthly_stats(conn):
+    """
+    Get monthly stats from defined mysql functions and adds them in a dataframe that's printed in the commandline.
+    param conn: MySQLConnection object
+    return: None
+    """
     avg_monthly_patients_seen = """
         SELECT hospital.avg_monthly_patients_per_doctor(%s, %s)
     """

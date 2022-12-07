@@ -5,7 +5,7 @@ from sql_functions import *
 from sql_stored_procedures import *
 from utils import *
 
-# DB Setup
+# Database Setup
 print('Hospital Database Management System')
 print('Hospital DB setup')
 
@@ -17,7 +17,7 @@ try:
         password=getpass('Enter password: '),
         database='hospital')
 
-    # Commandline Application
+    # Command line Application User Interface
     user_role = 0
     menu_option = 0
     doctor_id = 0
